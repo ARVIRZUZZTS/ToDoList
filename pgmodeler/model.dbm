@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.2.3" use-changelog="false" max-obj-count="4"
+	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
+	 last-position="0,138" last-zoom="1"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="TaskFile" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" name-color="#000000" sql-disabled="true">
+</schema>
+
+<table name="Task" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="360" y="520"/>
+	<column name="task_id" not-null="true">
+		<type name="varchar" length="128"/>
+	</column>
+	<column name="name">
+		<type name="varchar" length="64"/>
+	</column>
+	<column name="description">
+		<type name="text" length="0"/>
+	</column>
+	<column name="completed">
+		<type name="bool" length="0"/>
+	</column>
+	<column name="createdAt">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="priority">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="Task_pk" type="pk-constr" table="public.&quot;Task&quot;">
+		<columns names="task_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="FIle" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1020" y="500"/>
+	<column name="id_file" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name">
+		<type name="varchar" length="48"/>
+	</column>
+	<column name="path">
+		<type name="text" length="0"/>
+	</column>
+	<column name="uploaded_at">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="last_download_at">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="task_id">
+		<type name="varchar" length="128"/>
+	</column>
+	<constraint name="FIle_pk" type="pk-constr" table="public.&quot;FIle&quot;">
+		<columns names="id_file" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="fk-task_id(File)-task_id(Task)" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Task&quot;" table="public.&quot;FIle&quot;">
+	<columns names="task_id" ref-type="src-columns"/>
+	<columns names="task_id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="&quot;rel_FIle_Task&quot;" type="relfk" layers="0"
+	 src-table="public.&quot;FIle&quot;"
+	 dst-table="public.&quot;Task&quot;" reference-fk="fk-task_id(File)-task_id(Task)"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>

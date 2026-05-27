@@ -7,7 +7,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "dev:frontend": "vite --config frontend/vite.config.ts --root frontend",
+    "build:frontend": "tsc -b frontend/tsconfig.app.json frontend/tsconfig.node.json && vite build --config frontend/vite.config.ts --root frontend",
+    "lint:frontend": "eslint frontend",
+    "preview:frontend": "vite preview --config frontend/vite.config.ts --root frontend"
   },
   "repository": {
     "type": "git",
@@ -22,10 +26,11 @@
   "homepage": "https://github.com/ARVIRZUZZTS/ToDoList#readme",
   "dependencies": {
     "@prisma/client": "^7.8.0",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   },
   "devDependencies": {
-    "express": "^5.2.1",
     "cors": "^2.8.5",
     "prisma": "^7.8.0",
     "@types/cors": "^2.8.17",
@@ -33,6 +38,16 @@
     "@types/node": "^25.9.1",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.22.3",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^8.0.12"
   }
 }

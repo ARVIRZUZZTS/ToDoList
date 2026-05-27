@@ -1,11 +1,13 @@
 {
-  "name": "todolist",
+  "name": "todolist-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "Backend API para ToDoList con soporte de TS, JWT y 2FA",
+  "main": "src/server.ts",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -14,12 +16,19 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/ARVIRZUZZTS/ToDoList/issues"
   },
   "homepage": "https://github.com/ARVIRZUZZTS/ToDoList#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^6.0.3"
   }
 }

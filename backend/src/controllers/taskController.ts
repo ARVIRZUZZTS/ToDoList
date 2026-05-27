@@ -36,9 +36,9 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
             res.status(400).json({ error: "El campo 'completed' debe ser un booleano" });
             return;
         }
-
-        const updatedTask = await taskService.updateTaskCompletion(id, completed);
-        res.status(200).json(updatedTask);
+        // solucionar con el supabase
+        //const updatedTask = await taskService.updateTaskCompletion(id, completed);
+        //res.status(200).json(updatedTask);
     } catch (error) {
         res.status(500).json({ error: "Error al actualizar la tarea" });
     }
@@ -47,7 +47,8 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
 export const deleteTask = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        await taskService.removeTask(id);
+        // descomentar por el supabase integrado
+        //await taskService.removeTask(id);
         res.status(200).json({ message: "Tarea eliminada exitosamente" });
     } catch (error) {
         res.status(500).json({ error: "Error al eliminar la tarea" });

@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model FIle {
+  id_file          Int       @id(map: "FIle_pk") @default(autoincrement())
+  name             String?   @db.VarChar(48)
+  path             String?
+  uploaded_at      DateTime? @db.Timestamp(6)
+  last_download_at DateTime? @db.Timestamp(6)
+  task_id          String?   @db.VarChar(128)
+  Task             Task?     @relation(fields: [task_id], references: [task_id], onDelete: NoAction, onUpdate: NoAction, map: "fk-task_id(File)-task_id(Task)")
+}
+
+model Task {
+  task_id     String    @id(map: "Task_pk") @db.VarChar(128)
+  name        String?   @db.VarChar(64)
+  description String?
+  completed   Boolean?
+  createdAt   DateTime? @db.Timestamp(6)
+  priority    Int?      @db.SmallInt
+  FIle        FIle[]
+}

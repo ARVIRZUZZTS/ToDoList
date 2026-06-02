@@ -6,8 +6,9 @@ export const getTasks = async (req: Request, res: Response) => {
     try {
         const tasks = await taskService.getAllTasksWithFiles();
         res.status(200).json(tasks);
-    } catch (error) {
-        res.status(500).json({ error: "Error al obtener las tareas" });
+    } catch (error: any) {
+        console.error('Error aquisito en getTasks:', error.message);
+        res.status(500).json({ error: "Error al obtener las tareas", details: error.message });
     }
 };
 
@@ -22,8 +23,9 @@ export const createTask = async (req: Request, res: Response) => {
 
         const newTask = await taskService.createNewTask(name, description, priority);
         res.status(201).json(newTask);
-    } catch (error) {
-        res.status(500).json({ error: "Error al crear la tarea" });
+    } catch (error: any) {
+        console.error('Error en createTask:', error.message);
+        res.status(500).json({ error: "Error al crear la tarea", details: error.message });
     }
 };
 
@@ -36,21 +38,22 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
             res.status(400).json({ error: "El campo 'completed' debe ser un booleano" });
             return;
         }
-        // solucionar con el supabase
-        //const updatedTask = await taskService.updateTaskCompletion(id, completed);
-        //res.status(200).json(updatedTask);
-    } catch (error) {
-        res.status(500).json({ error: "Error al actualizar la tarea" });
+        
+        const updatedTask = await taskService.updateTaskCompletion(id, completed);
+        res.status(200).json(updatedTask);
+    } catch (error: any) {
+        console.error('Error en updateTaskStatus:', error.message);
+        res.status(500).json({ error: "Error al actualizar la tarea", details: error.message });
     }
 };
 
 export const deleteTask = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        // descomentar por el supabase integrado
-        //await taskService.removeTask(id);
+        await taskService.removeTask(id);
         res.status(200).json({ message: "Tarea eliminada exitosamente" });
-    } catch (error) {
-        res.status(500).json({ error: "Error al eliminar la tarea" });
+    } catch (error: any) {
+        console.error('Error en deleteTask:', error.message);
+        res.status(500).json({ error: "Error al eliminar la tarea", details: error.message });
     }
 };

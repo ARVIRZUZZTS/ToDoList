@@ -3,7 +3,7 @@ import prisma from '../config/db.js';
 
 export const getAllTasksWithFiles = async () => {
     return await prisma.task.findMany({
-        include: { files: true },
+        include: { File: true },
         orderBy: { createdAt: 'desc' }
     });
 };

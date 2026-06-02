@@ -4,10 +4,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model FIle {
-  id_file          Int       @id(map: "FIle_pk") @default(autoincrement())
+model File {
+  id_file          Int       @id(map: "File_pk") @default(autoincrement())
   name             String?   @db.VarChar(48)
   path             String?
   uploaded_at      DateTime? @db.Timestamp(6)
@@ -23,5 +24,5 @@ model Task {
   completed   Boolean?
   createdAt   DateTime? @db.Timestamp(6)
   priority    Int?      @db.SmallInt
-  FIle        FIle[]
+  File        File[]
 }

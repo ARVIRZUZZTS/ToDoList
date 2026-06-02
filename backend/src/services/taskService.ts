@@ -20,14 +20,14 @@ export const createNewTask = async (name: string, description?: string, priority
     });
 };
 
-export const updateTaskCompletion = async (taskId: string, completed: boolean) => {
+export const updateTaskCompletion = async (taskId: any, completed: boolean) => {
     return await prisma.task.update({
         where: { task_id: taskId },
         data: { completed }
     });
 };
 
-export const removeTask = async (taskId: string) => {
+export const removeTask = async (taskId: any) => {
     return await prisma.task.delete({
         where: { task_id: taskId }
     });

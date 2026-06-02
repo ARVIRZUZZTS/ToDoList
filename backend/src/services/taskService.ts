@@ -15,7 +15,8 @@ export const createNewTask = async (name: string, description?: string, priority
             name,
             description: description || "",
             completed: false,
-            priority: priority || 0
+            priority: priority || 0,
+            createdAt: new Date().toISOString()
         }
     });
 };

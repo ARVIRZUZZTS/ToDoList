@@ -31,22 +31,28 @@ export const createTask = async (req: Request, res: Response) => {
 };
 
 export const updateTaskStatus = async (req: Request, res: Response) => {
-    try {
-        const { id } = req.params;
-        const { completed } = req.body;
+  try {
+    const { id } = req.params;
+    const { completed } = req.body;
 
-        if (typeof completed !== 'boolean') {
-            res.status(400).json({ error: "El campo 'completed' debe ser un booleano" });
-            return;
-        }
-        
-        const updatedTask = await taskService.updateTaskCompletion(id, completed);
-        res.status(200).json(updatedTask);
-    } catch (error: any) {
-        console.error('Error en updateTaskStatus:', error.message);
-        res.status(500).json({ error: "Error al actualizar la tarea", details: error.message });
+    if (completed !== undefined && typeof completed !== "boolean") {
+      res
+        .status(400)
+        .json({
+          error: "El campo 'completed' debe ser un booleano",
+        });
+      return;
     }
+    const updatedTask = await taskService.updateTaskCompletion(id, completed);
+    res.status(200).json(updatedTask);
+  } catch (error: any) {
+    console.error("Error en updateTaskStatus:", error.message);
+    res
+      .status(500)
+      .json({ error: "Error al actualizar la tarea", details: error.message });
+  }
 };
+
 
 export const deleteTask = async (req: Request, res: Response) => {
     try {

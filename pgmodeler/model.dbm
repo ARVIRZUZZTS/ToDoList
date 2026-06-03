@@ -5,7 +5,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 -->
 <dbmodel pgmodeler-ver="1.2.3" use-changelog="false" max-obj-count="4"
 	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
-	 last-position="0,110" last-zoom="0.8" scene-rect="-680,0,2250.8,1076.8"
+	 last-position="0,0" last-zoom="0.8" scene-rect="-680,0,2250.8,1076.8"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -21,7 +21,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Task" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="360" y="520"/>
+	<position x="360" y="600"/>
 	<column name="task_id" not-null="true" default-value="gen_random_uuid()">
 		<type name="uuid" length="128"/>
 	</column>
@@ -51,7 +51,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="File" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="880" y="500"/>
+	<position x="960" y="560"/>
 	<column name="file_id" not-null="true" default-value="gen_random_uuid()">
 		<type name="uuid" length="0"/>
 	</column>
@@ -78,7 +78,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="User" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="-120" y="560"/>
+	<position x="-100" y="240"/>
 	<column name="user_id" not-null="true" default-value="gen_random_uuid()">
 		<type name="uuid" length="40"/>
 	</column>
@@ -108,7 +108,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Session" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="-660" y="540"/>
+	<position x="-620" y="480"/>
 	<column name="session_id" not-null="true" default-value="gen_random_uuid()">
 		<type name="uuid" length="0"/>
 	</column>

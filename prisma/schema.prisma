@@ -18,6 +18,17 @@ model File {
   Task             Task      @relation(fields: [task_id], references: [task_id], onDelete: NoAction, onUpdate: NoAction, map: "fk-task_id(File)-task_id(Task)")
 }
 
+model Session {
+  session_id String    @id(map: "Session_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String    @db.Uuid
+  token_hash String    @db.VarChar(64)
+  expires_at DateTime  @db.Timestamptz(6)
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  revoked_at DateTime? @db.Timestamptz(6)
+  user_agent String?
+  User       User      @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk-user_id(Session-User)")
+}
+
 model Task {
   task_id     String   @id(map: "Task_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String   @db.VarChar(64)
@@ -31,11 +42,12 @@ model Task {
 }
 
 model User {
-  user_id       String   @id(map: "User_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name          String   @db.VarChar(256)
-  email         String   @unique(map: "unique_email") @db.VarChar(256)
-  password_hash String   @db.VarChar(256)
-  created_at    DateTime @default(now()) @db.Timestamptz(6)
-  active        Boolean  @default(true)
+  user_id       String    @id(map: "User_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String    @db.VarChar(256)
+  email         String    @unique(map: "unique_email") @db.VarChar(256)
+  password_hash String    @db.VarChar(256)
+  created_at    DateTime  @default(now()) @db.Timestamptz(6)
+  active        Boolean   @default(true)
+  Session       Session[]
   Task          Task[]
 }

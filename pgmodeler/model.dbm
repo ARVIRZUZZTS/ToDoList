@@ -5,7 +5,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 -->
 <dbmodel pgmodeler-ver="1.2.3" use-changelog="false" max-obj-count="4"
 	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
-	 last-position="0,58" last-zoom="0.8" scene-rect="-140,0,1710.8,1076.8"
+	 last-position="0,110" last-zoom="0.8" scene-rect="-680,0,2250.8,1076.8"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -105,6 +105,36 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
+<table name="Session" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="-660" y="540"/>
+	<column name="session_id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="token_hash" not-null="true">
+		<type name="varchar" length="64"/>
+	</column>
+	<column name="expires_at" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="created_at" not-null="true" default-value="CURRENT_TIMESTAMP">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="revoked_at">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="user_agent">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="Session_pk" type="pk-constr" table="public.&quot;Session&quot;">
+		<columns names="session_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
 <constraint name="fk_id_usuario(User-Task)" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;User&quot;" table="public.&quot;Task&quot;">
 	<columns names="user_id" ref-type="src-columns"/>
@@ -117,6 +147,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="task_id" ref-type="dst-columns"/>
 </constraint>
 
+<constraint name="fk-user_id(Session-User)" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;User&quot;" table="public.&quot;Session&quot;">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="user_id" ref-type="dst-columns"/>
+</constraint>
+
 <relationship name="&quot;rel_FIle_Task&quot;" type="relfk" layers="0"
 	 src-table="public.&quot;File&quot;"
 	 dst-table="public.&quot;Task&quot;" reference-fk="fk-task_id(File)-task_id(Task)"
@@ -125,6 +161,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <relationship name="&quot;rel_Task_User&quot;" type="relfk" layers="0"
 	 src-table="public.&quot;Task&quot;"
 	 dst-table="public.&quot;User&quot;" reference-fk="fk_id_usuario(User-Task)"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="&quot;rel_Session_User&quot;" type="relfk" layers="0"
+	 src-table="public.&quot;Session&quot;"
+	 dst-table="public.&quot;User&quot;" reference-fk="fk-user_id(Session-User)"
 	 src-required="false" dst-required="true"/>
 
 </dbmodel>

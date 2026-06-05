@@ -5,7 +5,7 @@ export async function createSession(
   userId: string,
   sessionId: string,
   tokenHash: string,
-  expiresAt: string,
+  expiresAt: Date,
   userAgent?: string,
 ): Promise<Session> {
   return prisma.session.create({
@@ -19,7 +19,7 @@ export async function createSession(
   });
 }
 
-export async function findSessionBy(
+export async function findSessionById(
   sessionId: string,
 ): Promise<Session | null> {
   return prisma.session.findUnique({

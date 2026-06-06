@@ -9,7 +9,7 @@ export async function createUser(data:{
   name:string,
   email:string,
   password_hash:string
-}):Promise<User|null> {
+}):Promise<User> {
   return prisma.user.create({data});
 }
 

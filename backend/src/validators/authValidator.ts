@@ -1,8 +1,5 @@
 import { z } from "zod";
 
-export type RegisterInput = z.infer<typeof registerSchema>;
-export type LoginInput = z.infer<typeof loginSchema>;
-
 const emailField = z
   .email({
     error: "El correo no tiene el formato ejemplo@dominio.com",
@@ -34,3 +31,6 @@ export const loginSchema = z.object({
     error: "La contrasena no puede estar vacia",
   }),
 });
+
+export type RegisterInput = z.infer<typeof registerSchema>;
+export type LoginInput = z.infer<typeof loginSchema>;

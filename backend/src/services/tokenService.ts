@@ -53,3 +53,11 @@ export function verifyRefreshToken(token: string): RefreshTokenPayload {
 export function hashRefreshToken(plainToken: string): string {
   return crypto.createHash("sha256").update(plainToken).digest("hex");
 }
+
+export function createToken(user_id:string){
+  const sessionId = crypto.randomUUID();
+  const refreshToken = signRefreshToken(user_id, sessionId);
+  const refreshHash = hashRefreshToken(refreshToken);
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);;
+  return {sessionId, refreshToken, refreshHash, expiresAt};
+}

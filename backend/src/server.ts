@@ -1,4 +1,5 @@
 // colocal el type en reques y respnse por el tsconfig y evitar su rebla de verbatimModuleSyntax
+import cookieParser from 'cookie-parser';
 import express, { type Request, type Response } from 'express';
 import cors from 'cors';
 import apiRouter from './index.js';
@@ -8,6 +9,8 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use('/api', apiRouter);
 

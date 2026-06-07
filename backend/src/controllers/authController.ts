@@ -1,11 +1,11 @@
 import { hashPassword, verifyPassword } from "../services/passwordService.js";
 import { registerSchema, loginSchema } from "../validators/authValidator.js"
-import { createUser, deleteUserByEmail, findUserByEmail } from "../services/userService.js";
+import { createUser, findUserByEmail } from "../services/userService.js";
 import { createToken, signAccessToken } from "../services/tokenService.js";
 import type { Request, Response } from "express";
 import {Prisma} from '@prisma/client'
 import {z} from 'zod'
-import { createSession } from "../services/sessionService.js";
+import { createSession} from "../services/sessionService.js";
 
 export const register  = async(req:Request, res:Response)=>{
   const result = registerSchema.safeParse(req.body);

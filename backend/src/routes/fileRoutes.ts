@@ -6,7 +6,7 @@ import { uploadFile, downloadFile, deleteFile } from '../controllers/fileControl
 const router = Router();
 router.use(requireAuth);
 
-router.post('/task/:taskId/files', upload.single('file'), uploadFile);
+router.post('/tasks/:taskId/files', upload.single('file'), uploadFile);
 router.get('/files/:fileId', downloadFile);
 router.delete('/files/:fileId', deleteFile);
 

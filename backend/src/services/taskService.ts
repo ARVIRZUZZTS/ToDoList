@@ -14,16 +14,16 @@ export const createNewTask = async (name: string, userId:string, description?: s
         data: {
             name,
             description: description || "",
-            user_id: userId
+            user_id: userId,
+            priority: priority??0,
         }
     });
 };
 
-export const updateTaskCompletion = async (userId: string, taskId: any, completed?: boolean) => {
-    
+export const updateTaskCompletion = async (userId: string, taskId: any, completed: boolean) => {
     return await prisma.task.update({
         where: { task_id: taskId, user_id:userId},
-        data: { completed: completed??true }
+        data: { completed: completed??false }
     });
 };
 

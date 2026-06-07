@@ -1,4 +1,3 @@
-import { getPriority } from "node:os";
 import { z } from "zod";
 
 const nameField = z
@@ -18,7 +17,7 @@ export const createTaskSchema = z.object({
     .transform((s) => s.trim())
     .pipe(z.string().max(1000, "La descripcion es demasiado larga"))
     .optional(),
-  priority: z.number({error:"La prioridad debe de ser un numero"}).int("La prioridad debe ser un numero entero").min(0, "La prioridad no puede ser negativa").max(10, "La prioridad maxima es 10")
+  priority: z.number({error:"La prioridad debe de ser un numero"}).int("La prioridad debe ser un numero entero").min(0, "La prioridad no puede ser negativa").max(10, "La prioridad maxima es 10").optional()
 });
 
 export const updateTaskStatusSchema = z.object({

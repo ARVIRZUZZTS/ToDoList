@@ -30,3 +30,5 @@ node_modules
 /generated/prisma
 .env
 .bruno*
+todo*
+media/*

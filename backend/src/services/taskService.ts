@@ -1,34 +1,34 @@
 // funciones para las tasks obtenerTodos, crear,actualizar, eliminar
 import prisma from '../config/db.js';
 
-export const getAllTasksWithFiles = async () => {
+export async function getAllTasksWithFiles(userId: string){
     return await prisma.task.findMany({
+        where:   {user_id: userId},
         include: { File: true },
-        orderBy: { createdAt: 'desc' }
+        orderBy: { created_at: 'desc' }
     });
 };
 
-export const createNewTask = async (name: string, description?: string, priority?: number) => {
+export const createNewTask = async (name: string, userId:string, description?: string, priority?: number) => {
     return await prisma.task.create({
         data: {
-            task_id: crypto.randomUUID(),
             name,
             description: description || "",
-            completed: false,
-            priority: priority || 0
+            user_id: userId,
+            priority: priority??0,
         }
     });
 };
 
-export const updateTaskCompletion = async (taskId: string, completed: boolean) => {
+export const updateTaskCompletion = async (userId: string, taskId: any, completed: boolean) => {
     return await prisma.task.update({
-        where: { task_id: taskId },
-        data: { completed }
+        where: { task_id: taskId, user_id:userId},
+        data: { completed: completed??false }
     });
 };
 
-export const removeTask = async (taskId: string) => {
+export const removeTask = async (userId: string, taskId: any) => {
     return await prisma.task.delete({
-        where: { task_id: taskId }
+        where: { task_id: taskId, user_id:userId}
     });
 };

@@ -55,7 +55,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ onSubmit }) => {
         }}
       />
       <textarea
-        placeholder="Descripción (opcional)"
+        placeholder="Descripcion (opcional)"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         style={{

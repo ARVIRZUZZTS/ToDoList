@@ -5,7 +5,6 @@ declare global{
       user?:{
         user_id:string
       };
-      file?:Express.Multer.File;
     }
   }
 }

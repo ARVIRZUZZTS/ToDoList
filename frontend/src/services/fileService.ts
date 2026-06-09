@@ -1,9 +1,9 @@
 import { apiClient } from './api';
-import type { File } from '../types';
+import type { File as AppFile } from '../types';
 
 export const fileService = {
-  async upload(taskId: string, file: File): Promise<File> {
-    return apiClient.uploadFile<File>(`/tasks/${taskId}/files`, file);
+  async upload(taskId: string, file: File): Promise<AppFile> {
+    return apiClient.uploadFile<AppFile>(`/tasks/${taskId}/files`, file);
   },
 
   getDownloadUrl(fileId: string): string {

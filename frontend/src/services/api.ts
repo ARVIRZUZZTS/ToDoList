@@ -79,24 +79,26 @@ class ApiClient {
 
     }
 
-    uploadFile<T>(endpoint: string, file: File): Promise<T> {
+    async uploadFile<T>(endpoint: string, file: File): Promise<T> {
         const url = `${API_BASE}${endpoint}`;
         const formData = new FormData();
         formData.append('file', file);
 
-            return fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${this.getAccessToken()}`,
+        const token = this.getAccessToken();
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
             },
+            credentials: 'include',
             body: formData,
-        }).then(async (response) => {
-            if(!response.ok){
-                const error = await response.json().catch(() => ({message:'Error al subir el archivo'}));
-                throw error;
-            }
-            return response.json();
         });
+
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({ message: 'Error al subir archivo' }));
+            throw error;
+        }
+        return response.json();
     }
 
     downloadFile(url: string): string {

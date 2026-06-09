@@ -5,7 +5,7 @@ const API_BASE = 'http://localhost:5000/api';
 class ApiClient {
     private accessToken: string | null  = null;
 
-    setAcessToken(token: string | null) {
+    setAccessToken(token: string | null) {
         this.accessToken = token;
         if (token) {
             localStorage.setIten('accessToken', token);

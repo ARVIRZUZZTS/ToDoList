@@ -45,9 +45,10 @@ model User {
   user_id       String    @id(map: "User_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name          String    @db.VarChar(256)
   email         String    @unique(map: "unique_email") @db.VarChar(256)
-  password_hash String    @db.VarChar(256)
+  password_hash String?   @db.VarChar(256)
   created_at    DateTime  @default(now()) @db.Timestamptz(6)
   active        Boolean   @default(true)
+  google_id     String?   @unique @db.VarChar(256)
   Session       Session[]
   Task          Task[]
 }

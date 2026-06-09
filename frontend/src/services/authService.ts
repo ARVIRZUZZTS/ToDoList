@@ -24,11 +24,11 @@ export const authService = {
         const response = await apiClient.post<{accessToken: string; user:User}>('/auth/refresh');
         apiClient.setAccessToken(response.accessToken);
         return response;
-    }
+    },
 
     async logout(): Promise<void> {
         await apiClient.post('/auth/logout');
         apiClient.setAccessToken(null);
     },
 
-}
+};

@@ -102,8 +102,8 @@ class ApiClient {
         return response.json();
     }
 
-    downloadFile(url: string): string {
-        return `${API_BASE}${url}`;
+    downloadFile(endpoint: string): string {
+        return `${API_BASE}${endpoint}`;
     }
 }
 export const apiClient = new ApiClient();

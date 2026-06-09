@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { File } from '../../types';
 import { fileService } from '../../services/fileService';
 import { Button } from '../ui/Button';
+import { apiClient } from '../../services/api';
 
 interface FileItemProps {
   file: File;
@@ -10,10 +11,40 @@ interface FileItemProps {
 
 export const FileItem: React.FC<FileItemProps> = ({ file, onDeleted }) => {
   const [deleting, setDeleting] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
-  const handleDownload = () => {
-    const url = fileService.getDownloadUrl(file.file_id);
-    window.open(url, '_blank');
+  const handleDownload = async () => {
+    setDownloading(true);
+    try {
+      const token = apiClient.getAccessToken();
+      const url = fileService.getDownloadUrl(file.file_id);
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+      });
+
+      if(!response.ok) {
+        throw new Error('Error al descargar el archivo');
+      }
+      // el blob es binary large object
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = file.name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      window.URL.revokeObjectURL(blobUrl);
+      setDownloading(false);
+    } catch (error) {
+      alert('Error al descargar el archivo');
+    }
   };
 
   const handleDelete = async () => {

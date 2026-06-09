@@ -22,3 +22,11 @@ export async function deleteUserByEmail(email:string):Promise<User>{
 export async function findUserById(userId:string):Promise<User|null>{
   return prisma.user.findUnique({where:{user_id:userId}});
 }
+
+export async function createGoogleUser(data: {
+  name: string;
+  email: string;
+  google_id: string;
+}): Promise<User> {
+  return prisma.user.create({ data });
+}

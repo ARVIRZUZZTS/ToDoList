@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Task } from '../../types';
+import type { Task } from '../../types';
 import { Button } from '../ui/Button';
-import { FileUpload } from '../files/FileUpload';
-import { FileList } from '../files/FileList';
+import type { FileUpload } from '../files/FileUpload';
+import type { FileList } from '../files/FileList';
 
 interface TaskItemProps {
   task: Task;

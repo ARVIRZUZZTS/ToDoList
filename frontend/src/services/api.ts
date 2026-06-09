@@ -103,4 +103,4 @@ class ApiClient {
         return `${API_BASE}${url}`;
     }
 }
-export const apiCLient = new ApiClient();
+export const apiClient = new ApiClient();

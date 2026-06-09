@@ -46,7 +46,7 @@ export const login = async(req: Request, res:Response) => {
   }
   const {email, password} = result.data;
   const user = await findUserByEmail(email);
-  if(!user || !user.active){
+  if(!user || !user.active || !user.password_hash){
     return res.status(401).json({
       message: "Credenciales invalidas"
     });

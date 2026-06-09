@@ -99,7 +99,7 @@ class ApiClient {
         });
     }
 
-    dowloadFile(url: string): string {
+    downloadFile(url: string): string {
         return `${API_BASE}${url}`;
     }
 }

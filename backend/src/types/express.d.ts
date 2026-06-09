@@ -1,12 +1,11 @@
-import 'multer';
-declare global{
-  namespace Express{
-    interface Request{
-      user?:{
-        user_id:string
-      };
-      file?:Express.Multer.File;
+import "multer";
+
+declare global {
+  namespace Express {
+    interface User {
+      user_id: string;
     }
   }
 }
-export{};
+
+export {};

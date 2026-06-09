@@ -51,4 +51,4 @@ model User {
   google_id     String?   @unique @db.VarChar(256)
   Session       Session[]
   Task          Task[]
-}
+} 

@@ -15,10 +15,14 @@ class ApiClient {
     }
 
     getAccessToken(): string | null {
-        if (this.accessTokem) {
+        if (this.accessToken) {
             return this.accessToken;
         }
-        const stored = localStorage.getItem('accessToken');
+        const stored = localStorage.getItem('accessToken ');
+        if (stored)  {
+            this.accessToken = stored;
+        }
+            
         return this.accessToken;
     }
 
@@ -28,28 +32,38 @@ class ApiClient {
 
     ): Promise<T> {
         const url = `${API_BASE}${endpoint}`;
-        const headers: Record<String,String> = {
+        const headers: Record<string,string> = {
             'Content-Type': 'application/json', ...(options.headers as Record<string,string>),
         };
+        const token = this.getAccessToken();
+        if (token ) {
+            headers['Authorization'] = `Bearer ${token}`
+        }
+
+        const response = await fetch(url, {
+            ...options,
+            headers,
+        });
+
         if (!response.ok) {
             const error = await response.json().catch(() => ({ message: 'Error desconocido'}));
-
-            }
-            throw { status: response.status, ...error} as ApiError;
+            throw { status: response.status, ...error} as ApiError;                
         }
-        if(response.status === 204 ){
+        
+        if(response.status === 204){
             return {} as T;
         }
         return response.json();
-
     }
+    
     get<T>(endpoint:string):Promise<T> {
         return this.request<T>(endpoint, {method: 'GET'});
 
     }
+
     post<T>(endpoint: string, data?: unknown): Promise<T> {
         return this.request<T>(endpoint, {
-            methos: 'POST',
+            method: 'POST',
             body: data ? JSON.stringify(data) : undefined,
         });
     }
@@ -61,31 +75,31 @@ class ApiClient {
         });
     }
     delete<T>(endpoint: string): Promise<T> {
-        return this.request<T?(endpoint, : {method: 'DELETE'});
+        return this.request<T>(endpoint, {method: 'DELETE'});
 
     }
 
-    uploadFile<T>(endpoint: string): Promise<T> {
+    uploadFile<T>(endpoint: string, file: File): Promise<T> {
         const url = `${API_BASE}${endpoint}`;
-        const fromData = new FormData();
+        const formData = new FormData();
         formData.append('file', file);
 
-        return fetch(url, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${this.getAccessToken()}`,
-        },
-        body: formData,
-    }).then(async (response) => {
-        if(!response.ok){
-            const error = await response.json().catch(() => ({message:'Error al subir el archivo'}));
-            throw error;
-        }
-        return response.json();
-    });
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${this.getAccessToken()}`,
+            },
+            body: formData,
+        }).then(async (response) => {
+            if(!response.ok){
+                const error = await response.json().catch(() => ({message:'Error al subir el archivo'}));
+                throw error;
+            }
+            return response.json();
+        });
     }
 
-    dowloadFile(url: string): strign {
+    dowloadFile(url: string): string {
         return `${API_BASE}${url}`;
     }
 }

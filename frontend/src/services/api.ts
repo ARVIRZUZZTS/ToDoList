@@ -8,9 +8,9 @@ class ApiClient {
     setAccessToken(token: string | null) {
         this.accessToken = token;
         if (token) {
-            localStorage.setIten('accessToken', token);
+            localStorage.setItem('accessToken', token);
         }else {
-            localStorage.removeIten('accessToken');
+            localStorage.removeItem('accessToken');
         }
     }
 
@@ -18,7 +18,7 @@ class ApiClient {
         if (this.accessToken) {
             return this.accessToken;
         }
-        const stored = localStorage.getItem('accessToken ');
+        const stored = localStorage.getItem('accessToken');
         if (stored)  {
             this.accessToken = stored;
         }
@@ -36,13 +36,14 @@ class ApiClient {
             'Content-Type': 'application/json', ...(options.headers as Record<string,string>),
         };
         const token = this.getAccessToken();
-        if (token ) {
-            headers['Authorization'] = `Bearer ${token}`
+        if (token && !endpoint.includes('/auth/register') && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/refresh')) {
+            headers['Authorization'] = `Bearer ${token}`;
         }
 
         const response = await fetch(url, {
             ...options,
             headers,
+            credentials: 'include',
         });
 
         if (!response.ok) {

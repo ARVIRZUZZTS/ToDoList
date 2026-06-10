@@ -9,7 +9,6 @@ import { Spinner } from './components/ui/Spinner';
 
 function App() {
   const { user, loading } = useAuth();
-  const [isLogin, setIsLogin] = useState(true);
   
   const path = window.location.pathname;
 
@@ -24,21 +23,36 @@ function App() {
     return <LoginSuccess />;
   }
 
-  if (path === '/register') {
+  const authContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+    width: '100%',
+    position: 'fixed' as const,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'var(--bg)',
+    margin: 0,
+    padding: 0,
+  };
+  if (!user && path !== '/register') {
     return (
-      <div className="auth-container">
-        <Register onSwitchToLogin={() => {
-          window.location.href = '/';
+      <div style={authContainerStyle}>
+        <Login onSwitchToRegister={() => {
+          window.location.href = '/register';
         }} />
       </div>
     );
   }
 
-  if (!user) {
+  if (path === '/register') {
     return (
-      <div className="auth-container">
-        <Login onSwitchToRegister={() => {
-          window.location.href = '/register';
+      <div style={authContainerStyle}>
+        <Register onSwitchToLogin={() => {
+          window.location.href = '/';
         }} />
       </div>
     );

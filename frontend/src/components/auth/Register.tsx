@@ -33,6 +33,7 @@ export const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
 
     try {
       await register(name, email, password);
+      window.location.href = '/'; 
     } catch (err: any) {
       if (err.message?.includes('email')) {
         setError('El correo ya está registrado');

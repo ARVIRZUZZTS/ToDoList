@@ -41,7 +41,7 @@ export function googleCallback(req: Request, res: Response, next: NextFunction) 
           maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        return res.redirect(`${FRONTEND_URL}/login-success`);
+        return res.redirect(`${FRONTEND_URL}`);
       } catch (error) {
         console.error("Error en callback de Google", error);
         return res.redirect(

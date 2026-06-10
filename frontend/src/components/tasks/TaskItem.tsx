@@ -42,10 +42,12 @@ export const TaskItem: React.FC<TaskItemProps> = ({
   };
 
   const getPriorityColor = () => {
-    if (task.priority >= 8) return '#ef4444';
-    if (task.priority >= 5) return '#f59e0b';
-    return '#10b981';
-  };
+  if (task.priority >= 9) return '#ef4444';
+  if (task.priority >= 7) return '#f97316';
+  if (task.priority >= 5) return '#eab308';
+  if (task.priority >= 3) return '#22c55e';
+  return '#06b6d4';                     
+};
 
   return (
     <div

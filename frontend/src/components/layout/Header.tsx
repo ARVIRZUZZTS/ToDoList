@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
       }}
     >
       <div>
-        <h1 style={{ margin: 0, fontSize: '24px' }}>TaskFlow</h1>
+        <h1 style={{ margin: 0, fontSize: '24px' }}>TaskGaa</h1>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -63,7 +63,7 @@ export const Header: React.FC = () => {
           </div>
         </div>
         <Button variant="secondary" onClick={logout} style={{ padding: '8px 16px' }}>
-          Cerrar sesión
+          Cerrar sesion
         </Button>
       </div>
     </header>

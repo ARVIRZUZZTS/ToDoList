@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import type { Task } from '../../types';
 import { Button } from '../ui/Button';
-import type { FileUpload } from '../files/FileUpload';
-import type { FileList } from '../files/FileList';
+import { FileUpload } from '../files/FileUpload';
+import { FileList } from '../files/FileList';
 
 interface TaskItemProps {
   task: Task;
@@ -123,16 +123,16 @@ export const TaskItem: React.FC<TaskItemProps> = ({
         >
           {task.description && (
             <div style={{ marginBottom: '16px' }}>
-              <strong>Descripción:</strong>
+              <strong>Descripcion:</strong>
               <p style={{ margin: '8px 0 0', color: 'var(--text)' }}>{task.description}</p>
             </div>
           )}
 
           <div>
-            <strong>Archivos (máx 5):</strong>
+            <strong>Archivos (max 5):</strong>
             {task.File && task.File.length >= 5 ? (
               <p style={{ color: '#ef4444', fontSize: '14px', marginTop: '8px' }}>
-                Límite de 5 archivos alcanzado
+                Limite de 5 archivos alcanzado
               </p>
             ) : (
               <FileUpload taskId={task.task_id} onUploaded={onFileUploaded} />

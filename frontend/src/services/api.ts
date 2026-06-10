@@ -4,25 +4,13 @@ const API_BASE = 'http://localhost:5000/api';
 
 class ApiClient {
     private accessToken: string | null  = null;
+    private refreshPromise: Promise<boolean> | null = null;
 
     setAccessToken(token: string | null) {
-        this.accessToken = token;
-        if (token) {
-            localStorage.setItem('accessToken', token);
-        }else {
-            localStorage.removeItem('accessToken');
-        }
+        this.accessToken = token;        
     }
 
     getAccessToken(): string | null {
-        if (this.accessToken) {
-            return this.accessToken;
-        }
-        const stored = localStorage.getItem('accessToken');
-        if (stored)  {
-            this.accessToken = stored;
-        }
-            
         return this.accessToken;
     }
 
@@ -36,15 +24,32 @@ class ApiClient {
             'Content-Type': 'application/json', ...(options.headers as Record<string,string>),
         };
         const token = this.getAccessToken();
-        if (token && !endpoint.includes('/auth/register') && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/refresh')) {
+        if (token && !endpoint.includes('/auth/register') && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/refresh') && !endpoint.includes('/auth/session')) {
             headers['Authorization'] = `Bearer ${token}`;
         }
+        const makeRequest = async (): Promise<Response> => {
+            return fetch(url, {
+                ...options,
+                headers,
+                credentials: 'include',
+            });
+        };
+        let response = await makeRequest();
 
-        const response = await fetch(url, {
-            ...options,
-            headers,
-            credentials: 'include',
-        });
+        if (response.status === 401 && !endpoint.includes('/auth/')) {
+            const refreshed = await this.refreshSession();
+            if (refreshed) {
+                const newToken = this.getAccessToken();
+                if (newToken) {
+                    headers['Authorization'] = `Bearer ${newToken}`;
+                }
+                response = await makeRequest();
+            } else {
+                this.setAccessToken(null);
+                window.location.href = '/';
+                throw new Error('Sesión expirada');
+            }
+        }
 
         if (!response.ok) {
             const error = await response.json().catch(() => ({ message: 'Error desconocido'}));
@@ -86,11 +91,13 @@ class ApiClient {
         formData.append('file', file);
 
         const token = this.getAccessToken();
+        const headers: HeadersInit = {};
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
+            headers,
             credentials: 'include',
             body: formData,
         });
@@ -104,6 +111,31 @@ class ApiClient {
 
     downloadFile(endpoint: string): string {
         return `${API_BASE}${endpoint}`;
+    }
+
+    private async refreshSession(): Promise<boolean> {
+        if (this.refreshPromise) {
+            return this.refreshPromise;
+        }
+        this.refreshPromise = (async() => {
+            try {
+                const response = await fetch(`${API_BASE}/auth/refresh`, {
+                    method: 'POST',
+                    credentials: 'include',
+                });
+                if(!response.ok){
+                    return false;
+                }
+                const data = await response.json();
+                this.accessToken= data.accessToken;
+                return true;
+            } catch {
+                return false;
+            } finally {
+                this.refreshPromise =null;
+            }
+        })();
+        return this.refreshPromise;
     }
 }
 export const apiClient = new ApiClient();

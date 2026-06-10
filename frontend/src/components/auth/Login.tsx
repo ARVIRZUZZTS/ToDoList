@@ -109,6 +109,23 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
           Regístrate
         </button>
       </p>
+      <div style={{ marginTop: '16px', textAlign: 'center' }}>
+        <a
+          href="http://localhost:5000/api/auth/google"
+          style={{
+            display: 'inline-block',
+            padding: '10px 20px',
+            background: '#4285ea',
+            color: 'white',
+            textDecoration: 'none',
+            borderRadius: '8px',
+            fontSize: '14px',
+          }}
+        >
+          Continuar con Google
+        </a>
+      </div>
     </div>
+    
   );
 };

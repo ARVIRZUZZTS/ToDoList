@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { authService } from '../services/authService';
 import { apiClient } from '../services/api';
 import type { User } from '../types';
@@ -31,16 +31,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const initAuth = async () => {
-      const token = apiClient.getAccessToken();
-      if (token) {
-        try {
-          const response = await authService.refresh();
+      try {
+        const response = await authService.getSession();
+        if (response) {
           setUser(response.user);
-        } catch (error) {
-          apiClient.setAccessToken(null);
+          apiClient.setAccessToken(response.accessToken);
         }
+      } catch (error) {
+        console.log('no hay sesion activa');
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     initAuth();
   }, []);
@@ -48,6 +49,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string) => {
     const response = await authService.login(email, password);
     setUser(response.user);
+    apiClient.setAccessToken(response.accessToken);
   };
 
   const register = async (name: string, email: string, password: string) => {
@@ -58,6 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = async () => {
     await authService.logout();
     setUser(null);
+    apiClient.setAccessToken(null);
   };
 
   return (

@@ -31,4 +31,13 @@ export const authService = {
         apiClient.setAccessToken(null);
     },
 
+    async getSession(): Promise<{ accessToken: string;user:User} | null> {
+        try {
+            const response = await apiClient.post<{accessToken:String;user:User}>('/auth/session');
+            return response;
+        } catch {
+            return null;
+        }
+    },
+
 };

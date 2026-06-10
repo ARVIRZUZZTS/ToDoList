@@ -20,6 +20,7 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
 
     try {
       await login(email, password);
+      window.location.href = '/';
     } catch (err: any) {
       setError(err.message || 'Error al iniciar sesión');
     } finally {
@@ -126,6 +127,6 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
         </a>
       </div>
     </div>
-    
+
   );
 };

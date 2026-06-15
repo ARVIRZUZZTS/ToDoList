@@ -208,6 +208,7 @@ Linux:
 
 ```bash
 sudo apt install libnss3-tools
+sudo dnf install nss-tools # en fedora
 curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
 chmod +x mkcert-v*-linux-amd64
 sudo mv mkcert-v*-linux-amd64 /usr/local/bin/mkcert
@@ -246,9 +247,11 @@ npm run dev
 
 Y ya tiene la base de datos poblada
 ## Paso 12 — Puede entrar a la aplicacion con los siguientes usuarios:
-usuario:
+usuario 1: websito@gmail.com
+contrasena: 12345678
 
-contrasena:
+usuario 2: bruce@bati.com
+contrasena: batiContra
   
 ## Aclaracion:
 No poblamos los archivos en la base de datos, ya que los archivos de guardan de manera local en la carpeta media/

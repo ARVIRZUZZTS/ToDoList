@@ -2,13 +2,15 @@
 import cookieParser from 'cookie-parser';
 import express, {type Request,type Response,type NextFunction } from "express";
 import cors from 'cors';
+import https from "node:https";
+import fs from "node:fs";
 import apiRouter from './index.js';
 
 const app = express();
 const PORT = 5000;
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://localhost:5173',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -23,8 +25,13 @@ app.get('/', (req: Request, res: Response) => {
     res.json({ message: "Backend corriendo en Type"});
 });
 
-app.listen(PORT, () => {
-    console.log(`Server en http://localhost:${PORT}`);
+const options = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+};
+
+https.createServer(options, app).listen(PORT, () => {
+    console.log(`Server en https://localhost:${PORT}`);
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) =>{

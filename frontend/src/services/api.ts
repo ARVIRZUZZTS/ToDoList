@@ -1,6 +1,6 @@
 import type { ApiError } from '../types';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://localhost:5000/api';
 
 class ApiClient {
     private accessToken: string | null  = null;

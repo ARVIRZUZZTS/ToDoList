@@ -112,7 +112,7 @@ export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
       </p>
       <div style={{ marginTop: '16px', textAlign: 'center' }}>
         <a
-          href="http://localhost:5000/api/auth/google"
+          href="https://localhost:5000/api/auth/google"
           style={{
             display: 'inline-block',
             padding: '10px 20px',
